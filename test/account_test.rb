@@ -2,6 +2,12 @@ require 'test_helper'
 
 class AccountTest < Test::Unit::TestCase
   
+  def test_list_accounts    
+    accounts = Recurly::Account.find(:all)
+    assert_not_nil accounts
+    assert_instance_of Array, accounts
+  end
+  
   def test_create
     account = create_account('create')
     assert_not_nil account.created_at
