@@ -10,7 +10,7 @@ class PlanTest < Test::Unit::TestCase
   end
   
   def test_get_plan
-    plan = Recurly::Plan.find('trial')
+    plan = Recurly::Plan.find(config[:test_plan_code])
     assert_not_nil plan
     assert_not_nil plan.name
   end

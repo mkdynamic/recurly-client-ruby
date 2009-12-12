@@ -43,6 +43,8 @@ Examples
 
 All the functionality is demonstrated by the unit tests in the __test__ directory.
 
+To run the tests, you'll need to create a file __/test/config.yml__. See __/test/config.example.yml__ for details.
+
 
 API Documentation
 -----------------

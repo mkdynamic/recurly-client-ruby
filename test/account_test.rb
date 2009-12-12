@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class AccountTest < Test::Unit::TestCase
-
+  
   def test_create
     account = create_account('create')
     assert_not_nil account.created_at

@@ -3,12 +3,14 @@ require 'rubygems'
 
 require File.dirname(__FILE__) + '/../lib/recurly'
 
-Recurly.configure do |c|
-  c.username = ''
-  c.password = ''
+def config
+  @@config ||= YAML::load(File.read(File.dirname(__FILE__) + "/config.yml"))
 end
 
-TEST_PLAN_CODE = 'trial'
+Recurly.configure do |c|
+  c.username = config[:username]
+  c.password = config[:password]
+end
 
 def create_account(account_code)
   account = Recurly::Account.create(

@@ -10,7 +10,7 @@ class SubscriptionTest < Test::Unit::TestCase
       :email => 'verena@test.com',
       :company_name => 'Recurly Ruby Gem')
       
-    sub = create_subscription(account, TEST_PLAN_CODE)
+    sub = create_subscription(account, config[:test_plan_code])
     assert_not_nil sub
     assert_nil sub.canceled_at
     assert_equal sub.state, 'active'
@@ -19,14 +19,14 @@ class SubscriptionTest < Test::Unit::TestCase
   
   def test_create_subscription_existing_account
     account = create_account('existing-account')
-    sub = create_subscription(account, TEST_PLAN_CODE)
+    sub = create_subscription(account, config[:test_plan_code])
     
     assert_equal sub.state, 'active'
   end
   
   def test_update_subscription
     account = create_account('update-subscription')
-    sub = create_subscription(account, TEST_PLAN_CODE)
+    sub = create_subscription(account, config[:test_plan_code])
     
     sub.change('now', :quantity => 2)
     sub.reload
@@ -35,7 +35,7 @@ class SubscriptionTest < Test::Unit::TestCase
   
   def test_cancel_subscription
     account = create_account('cancel-subscription')
-    subscription = create_subscription(account, TEST_PLAN_CODE)
+    subscription = create_subscription(account, config[:test_plan_code])
     
     subscription.cancel
     
@@ -46,7 +46,7 @@ class SubscriptionTest < Test::Unit::TestCase
   
   def test_refund_subscription
     account = create_account('refund-subscription')
-    subscription = create_subscription(account, TEST_PLAN_CODE)
+    subscription = create_subscription(account, config[:test_plan_code])
     
     subscription.refund(:full)
     
