@@ -12,11 +12,19 @@ Recurly.configure do |c|
   c.password = config[:password]
 end
 
-def create_account(account_code)
-  account = Recurly::Account.create(
+def create_account(account_code, attrs = {})
+  account = new_account(account_code, attrs)
+  account.save
+  account
+end
+
+def new_account(account_code, attrs = {})
+  default_attrs = {
     :account_code => "#{Time.now.to_i}-#{account_code}",
     :first_name => 'Verena',
     :last_name => 'Test',
     :email => 'verena@test.com',
-    :company_name => 'Recurly Ruby Gem')
+    :company_name => 'Recurly Ruby Gem'
+  }
+  account = Recurly::Account.new(default_attrs.merge(attrs))
 end
