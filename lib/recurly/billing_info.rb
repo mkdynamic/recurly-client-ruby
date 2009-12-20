@@ -4,7 +4,7 @@ module Recurly
     self.prefix = "/accounts/:account_code"
     
     # Create / Update is always a PUT
-    def save
+    def save_without_validation
       update
     end
   end
