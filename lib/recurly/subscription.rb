@@ -10,8 +10,8 @@ module Recurly
     
     # Stops the subscription from renewing. The subscription remains valid until the end of
     # the current term (current_period_ends_at).
-    def cancel
-      Subscription.delete(self.subscription_account_code)
+    def cancel (account_code)
+      Subscription.delete(account_code)
     end
     
     # Terminates the subscription immediately and processes a full or partial refund
@@ -25,15 +25,17 @@ module Recurly
     def change(timeframe, options = {})
       raise "Timeframe must be :now or :renewal." unless timeframe == 'now' or timeframe == 'renewal'
       options[:timeframe] = timeframe
-      connection.put(element_path(:account_code => self.subscription_account_code), 
+      connection.put(element_path(self.subscription_account_code), 
         self.class.format.encode(options, :root => :subscription), 
         self.class.headers)
     end
     
     def subscription_account_code
-      acct_code = self.account_code if defined?(self.account_code)
-      acct_code ||= account.account_code unless account.nil?
+      acct_code = self.account_code if defined?(self.account_code) and !self.account_code.nil? and !self.account_code.blank?
+      acct_code ||= account.account_code if defined?(account) and !account.nil?
       acct_code ||= self.primary_key if defined?(self.primary_key)
+      acct_code ||= self.id if defined?(self.id)
+      raise 'Missing Account Code' if acct_code.nil? or acct_code.blank?
       acct_code
     end
   end
