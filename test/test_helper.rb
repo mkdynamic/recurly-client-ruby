@@ -4,7 +4,7 @@ require 'rubygems'
 require File.dirname(__FILE__) + '/../lib/recurly'
 
 def config
-  @@config ||= YAML::load(File.read(File.dirname(__FILE__) + "/config.yml"))
+  @@config ||= YAML::load_file(File.dirname(__FILE__) + "/config.yml")
 end
 
 Recurly.configure do |c|
